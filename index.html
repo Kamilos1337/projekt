@@ -31,7 +31,7 @@
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"
-        import { GoogleAuthProvider,signInWithPopup, getAuth  } from 'https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js'
+        import { GoogleAuthProvider,signInWithPopup, getAuth  } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js'
         import { getFirestore  } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
         import { collection, getDocs, deleteDoc, query, where, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
 
@@ -48,28 +48,30 @@
           const db = getFirestore(app);
 
 
-          // const provider = new GoogleAuthProvider();
-          // const auth = await getAuth(app);
-          //
-          // await signInWithPopup(auth, provider)
-          //   .then((result) => {
-          //     // This gives you a Google Access Token. You can use it to access the Google API.
-          //     const credential = GoogleAuthProvider.credentialFromResult(result);
-          //     const token = credential.accessToken;
-          //     // The signed-in user info.
-          //     const user = result.user;
-          //     // ...
-          //   }).catch((error) => {
-          //     // Handle Errors here.
-          //     const errorCode = error.code;
-          //     const errorMessage = error.message;
-          //     // The email of the user's account used.
-          //     const email = error.email;
-          //     // The AuthCredential type that was used.
-          //     const credential = GoogleAuthProvider.credentialFromError(error);
-          //     // ...
-          //     console.log(error)
-          //   });
+          const provider = new GoogleAuthProvider();
+          const auth = await getAuth(app);
+          async function logInGoogle(){
+            await signInWithPopup(auth, provider)
+              .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // ...
+              }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+                console.log(error)
+              });
+          }
+        window.logInGoogle = logInGoogle
 
 
 
