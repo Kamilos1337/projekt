@@ -1,23 +1,23 @@
 const staticDevCoffee = "kurier-app-site-v1";
 const assets = [
-  "/pwa/",
-  "/pwa/map.html",
-  "/pwa/sos.html",
-  "/pwa/index.html",
-  "/pwa/css/style.css",
-  "/pwa/js/app.js",
-  "/pwa/images/coffe1.png",
-  "/pwa/images/coffee2.jpg",
-  "/pwa/images/coffee3.jpg",
-  "/pwa/images/coffee4.jpg",
-  "/pwa/images/coffee5.jpg",
-  "/pwa/images/coffee6.jpg",
-  "/pwa/images/coffee7.jpg",
-  "/pwa/images/coffee8.jpg",
-  "/pwa/images/coffee9.jpg",
-    "/pwa/images/k1.jpg",
-      "/pwa/images/k2.jpg",
-        "/pwa/images/k3.jpg"
+  "/projekt/",
+  "/projekt/map.html",
+  "/projekt/sos.html",
+  "/projekt/index.html",
+  "/projekt/css/style.css",
+  "/projekt/js/app.js",
+  "/projekt/images/coffe1.png",
+  "/projekt/images/coffee2.jpg",
+  "/projekt/images/coffee3.jpg",
+  "/projekt/images/coffee4.jpg",
+  "/projekt/images/coffee5.jpg",
+  "/projekt/images/coffee6.jpg",
+  "/projekt/images/coffee7.jpg",
+  "/projekt/images/coffee8.jpg",
+  "/projekt/images/coffee9.jpg",
+    "/projekt/images/k1.jpg",
+      "/projekt/images/k2.jpg",
+        "/projekt/images/k3.jpg"
 ];
 
 self.addEventListener("install", installEvent => {
