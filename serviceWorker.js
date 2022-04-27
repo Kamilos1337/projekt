@@ -1,4 +1,4 @@
-const staticDevCoffee = "dev-coffee-site-v1";
+const staticDevCoffee = "kurier-app-site-v1";
 const assets = [
   "/pwa/",
   "/pwa/map.html",
@@ -6,7 +6,7 @@ const assets = [
   "/pwa/index.html",
   "/pwa/css/style.css",
   "/pwa/js/app.js",
-  "/pwa/images/coffee1.jpg",
+  "/pwa/images/coffe1.png",
   "/pwa/images/coffee2.jpg",
   "/pwa/images/coffee3.jpg",
   "/pwa/images/coffee4.jpg",
