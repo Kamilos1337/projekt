@@ -35,26 +35,50 @@
         // https://firebase.google.com/docs/web/setup#available-libraries
 
         // Firestore
-
-        import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
+        import { GoogleAuthProvider,signInWithPopup, getAuth  } from 'https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js'
+        import { getFirestore  } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
         import { collection, getDocs, deleteDoc, query, where, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
           apiKey: "AIzaSyAoyx-GPeLViIx6-2HRfxC-atMLXxAHuwA",
-          authDomain: "studia-46c56.firebaseapp.com",
+          authDomain: "kamilos1337.github.io",
           projectId: "studia-46c56",
           storageBucket: "studia-46c56.appspot.com",
           messagingSenderId: "266129178736",
           appId: "1:266129178736:web:d5b01218cb3ae90f1f74b5",
           measurementId: "G-VK6WYZ8YGD"
         };
+          const app = initializeApp(firebaseConfig);
+          const db = getFirestore(app);
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+          const provider = new GoogleAuthProvider(app);
+          const auth = getAuth(app);
 
-        // Initialize Cloud Firestore and get a reference to the service
-        const db = getFirestore(app);
+          function logInGoogle(){
+            signInWithPopup(auth, provider)
+              .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // ...
+              }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+                console.log(error)
+              });
+          }
+
+          window.logInGoogle = logInGoogle;
+
+
 
         // Read data
         const users = await getDocs(collection(db, "users"));
@@ -214,6 +238,7 @@
           <button class="hideME" v-if="user!=''" type="button" style="margin-right:10px;" class="btn btn-primary">
           Ilość paczek <span class="badge bg-secondary">{{items.length}}</span>
         </button>
+         <li v-if="user==''"><a type="button" class="btn btn-primary" onclick="logInGoogle()">Google</a></li>
           <li v-if="user==''"><a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
           <li v-if="user!=''"><a type="button" class="btn btn-primary"  v-on:click="logout" >Wyloguj</a></li>
         </ul>
