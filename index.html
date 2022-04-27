@@ -229,7 +229,7 @@
         <h1>Kurier'App</h1>
 
         <ul>
-          <button class="hideME" v-if="user!=''" type="button" style="margin-right:10px;" class="btn btn-primary">
+          <button class="hideME btn btn-primary" v-if="user!=''" type="button" style="margin-right:10px;" >
           Ilość paczek <span class="badge bg-secondary">{{items.length}}</span>
         </button>
          <li v-if="user==''"><a type="button" class="btn btn-primary" onclick="logInGoogle()">Google</a></li>
