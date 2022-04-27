@@ -25,7 +25,7 @@
 
     <title>Kurier app</title>
   </head>
-  <body>
+  <body style="display:none;">
 
 
     <script type="module">
@@ -33,7 +33,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"
         import { GoogleAuthProvider,signInWithPopup, getAuth  } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js'
         import { getFirestore  } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
-        import { collection, getDocs, deleteDoc, query, where, addDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
+        import { collection, getDocs, deleteDoc, query, where, addDoc, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js'
 
         const firebaseConfig = {
           apiKey: "AIzaSyAoyx-GPeLViIx6-2HRfxC-atMLXxAHuwA",
@@ -53,12 +53,39 @@
           async function logInGoogle(){
             signInWithPopup(auth, provider)
               .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // ...
+                async function doAll(){
+                  // This gives you a Google Access Token. You can use it to access the Google API.
+                  const credential = GoogleAuthProvider.credentialFromResult(result);
+                  const token = credential.accessToken;
+                  // The signed-in user info.
+                  const user = result.user;
+                  console.log(user)
+                  setCookie("login", user.uid, 30)
+                  const q = query(collection(db, "users"), where("id", "==", user.uid), where("password", "==", user.uid));
+                  const querySnapshot = await getDocs(q);
+                  let status = false;
+                  await querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    setCookie("login", doc.id, 30)
+                    setCookie("name", doc.data().login, 30)
+                    console.log(doc.id, " => ", doc.data());
+                    status = true;
+                    console.log("taki status", status)
+                  })
+                  console.log("Jaki status", status)
+                  if(!status){
+                    await setDoc(doc(db, "users", user.uid,), {
+                      id: user.uid,
+                      login: user.email,
+                      password: user.uid,
+                    });
+                  }
+
+                  //window.location.reload();
+                  // ...
+                }
+                doAll();
+
               }).catch((error) => {
                 // Handle Errors here.
                 const errorCode = error.code;
@@ -120,8 +147,8 @@
             })
         }
 
+      if(navigator.mediaDevices)navigator.mediaDevices.getUserMedia({video: true})
 
-      navigator.mediaDevices.getUserMedia({video: true})
 
         var myApp = new Vue({
           el: '#app',
@@ -223,6 +250,7 @@
              this.checkUser()
           },
         })
+        document.querySelector("body").style.display="block"
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
       <div id="app">
