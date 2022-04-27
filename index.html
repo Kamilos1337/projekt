@@ -79,9 +79,10 @@
                       login: user.email,
                       password: user.uid,
                     });
+                    setCookie("login", user.uid, 30)
                   }
 
-                  //window.location.reload();
+                  window.location.reload();
                   // ...
                 }
                 doAll();
