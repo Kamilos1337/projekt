@@ -161,13 +161,16 @@
           methods: {
             check: async function(){
               let id = document.querySelector("#paczka").value
-              const q = query(collection(db, "delivery"), where("id", "==", id));
+              console.log(id);
+              const q = query(collection(db, "delivery"), where("id", "==", parseInt(id)));
               const querySnapshot = await getDocs(q);
+              console.log(querySnapshot)
               this.current = [];
               await querySnapshot.forEach((doc) => {
                 this.current=doc.data()
+                console.log(this.current)
               })
-              navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100])
+
             },
             checkUser: async function(){
               const userKey = getCookie("login");
