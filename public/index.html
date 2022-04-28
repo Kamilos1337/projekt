@@ -159,9 +159,17 @@
             current:{}
           },
           methods: {
-            checkMe: async function(){
-
-              console.log("ASDASD")
+            check: async function(){
+              let id = document.querySelector("#paczka").value
+              console.log(id);
+              const q = query(collection(db, "delivery"), where("id", "==", parseInt(id)));
+              const querySnapshot = await getDocs(q);
+              console.log(querySnapshot)
+              this.current = [];
+              await querySnapshot.forEach((doc) => {
+                this.current=doc.data()
+                console.log(this.current)
+              })
 
             },
             checkUser: async function(){
@@ -296,7 +304,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 
-          <button type="button" class="btn btn-primary" v-on:click="checkMe" >Sprawdź paczkę</button>
+          <button type="button" class="btn btn-primary" v-on:click="check">Sprawdź paczkę</button>
         </div>
       </div>
     </div>

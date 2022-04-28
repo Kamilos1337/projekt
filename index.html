@@ -44,12 +44,13 @@
           appId: "1:266129178736:web:d5b01218cb3ae90f1f74b5",
           measurementId: "G-VK6WYZ8YGD"
         };
+
           const app = await initializeApp(firebaseConfig);
           const db = getFirestore(app);
 
-
           const provider = new GoogleAuthProvider();
           const auth = await getAuth(app);
+
           async function logInGoogle(){
             signInWithPopup(auth, provider)
               .then((result) => {
@@ -81,9 +82,7 @@
                     });
                     setCookie("login", user.uid, 30)
                   }
-
                   window.location.reload();
-                  // ...
                 }
                 doAll();
 
@@ -99,17 +98,15 @@
                 console.log(error)
               });
           }
+
         window.logInGoogle = logInGoogle
-
-
-
-
 
         // Read data
         const users = await getDocs(collection(db, "users"));
         var myModal = new bootstrap.Modal(document.getElementById('login'), {
           keyboard: false
         })
+
         function setCookie(name,value,days) {
             var expires = "";
             if (days) {
@@ -134,6 +131,7 @@
         function eraseCookie(name) {
             document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         }
+
         const login = async (login,password) =>{
             console.log(login,password)
             const q = query(collection(db, "users"), where("login", "==", login), where("password", "==", password));
@@ -170,7 +168,6 @@
                 this.current=doc.data()
                 console.log(this.current)
               })
-
             },
             checkUser: async function(){
               const userKey = getCookie("login");
@@ -199,7 +196,7 @@
             },
             logout: function (){
               console.log("logout")
-                            eraseCookie("login");
+              eraseCookie("login");
               this.user=""
               this.items=[]
             },
